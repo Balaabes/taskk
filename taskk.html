@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Custom Chocolate Bundle</title>
+    <style>
+        /* Add your custom styles for the product selection interface */
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        .chocolate-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .chocolate-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .selected-items {
+            margin-top: 20px;
+        }
+
+        .total-price {
+            font-weight: bold;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Build Your Custom Chocolate Pack</h1>
+
+<ul class="chocolate-list">
+    <li class="chocolate-item">
+        <label>
+            <input type="checkbox" class="chocolate-checkbox" data-price="2.5">
+            Milk Chocolate
+        </label>
+        <span>$2.50</span>
+    </li>
+    <li class="chocolate-item">
+        <label>
+            <input type="checkbox" class="chocolate-checkbox" data-price="3.0">
+            Dark Chocolate
+        </label>
+        <span>$3.00</span>
+    </li>
+    <!-- Add more chocolates as needed -->
+</ul>
+
+<div class="selected-items">
+    <h2>Your Custom Pack:</h2>
+    <ul id="selected-chocolates" class="chocolate-list"></ul>
+    <div class="total-price">Total Price: $<span id="total-price">0.00</span></div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var checkboxes = document.querySelectorAll('.chocolate-checkbox');
+        var selectedChocolates = document.getElementById('selected-chocolates');
+        var totalPriceElement = document.getElementById('total-price');
+
+        checkboxes.forEach(function (checkbox) {
+            checkbox.addEventListener('change', function () {
+                updateSelectedChocolates();
+                updateTotalPrice();
+            });
+        });
+
+        function updateSelectedChocolates() {
+            selectedChocolates.innerHTML = ''; // Clear the list
+
+            checkboxes.forEach(function (checkbox) {
+                if (checkbox.checked) {
+                    var chocolateName = checkbox.parentElement.textContent.trim();
+                    var listItem = document.createElement('li');
+                    listItem.textContent = chocolateName;
+                    selectedChocolates.appendChild(listItem);
+                }
+            });
+        }
+
+        function updateTotalPrice() {
+            var totalPrice = 0;
+
+            checkboxes.forEach(function (checkbox) {
+                if (checkbox.checked) {
+                    totalPrice += parseFloat(checkbox.getAttribute('data-price'));
+                }
+            });
+
+            totalPriceElement.textContent = totalPrice.toFixed(2);
+        }
+    });
+</script>
+
+</body>
+</html>
